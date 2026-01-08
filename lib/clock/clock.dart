@@ -29,7 +29,7 @@ class ClockCircle extends StatelessWidget {
         ),
         child: Center(
           child: Text(
-            '$minutes:$seconds',
+            counter == 0 ? 'Done' : '$minutes:$seconds',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
               fontSize: 48,
               color: Theme.of(context).colorScheme.onPrimaryContainer,

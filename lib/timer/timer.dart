@@ -14,7 +14,8 @@ class TimerPage extends StatefulWidget {
 }
 
 class _TimerPageState extends State<TimerPage> {
-  int _counter = 0;
+  static const int _initialTime = 20; // 25 * 60;
+  int _counter = _initialTime;
   Timer? _timer;
   TimerState _state = TimerState.idle;
 
@@ -29,10 +30,12 @@ class _TimerPageState extends State<TimerPage> {
     super.dispose();
   }
 
-  void _incrementCounter() {
+  void _tick() {
     setState(() {
-      _counter++;
-      if (_counter > 0 && _counter % ClockCircle.cycleLength == 0) {
+      if (_counter > 0) {
+        _counter--;
+      }
+      if (_counter == 0) {
         _stopTimer();
       }
     });
@@ -45,7 +48,7 @@ class _TimerPageState extends State<TimerPage> {
   void _runTimer() {
     setState(() {
       _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-        _incrementCounter();
+        _tick();
       });
       _state = TimerState.running;
     });
@@ -61,7 +64,7 @@ class _TimerPageState extends State<TimerPage> {
   void _resetTimer() {
     setState(() {
       _timer?.cancel();
-      _counter = 0;
+      _counter = _initialTime;
       _state = TimerState.idle;
     });
   }
